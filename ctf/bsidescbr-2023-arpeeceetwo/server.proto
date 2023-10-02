@@ -1,0 +1,94 @@
+syntax = "proto2";
+
+package server;
+
+enum MessageType {
+	MSG_LOGIN_REQUEST=0;
+	MSG_LOGIN_RESPONSE=1;
+	MSG_REGISTER_REQUEST=2;
+	MSG_REGISTER_RESPONSE=3;
+	MSG_MESSAGE_REQUEST=4;
+	MSG_MESSAGE_RESPONSE=5;
+	MSG_FLAG_REQUEST=6;
+	MSG_FLAG_RESPONSE=7;
+}
+
+enum Status {
+		SUCCESS = 0;
+		FAILURE = 1;
+	}
+
+enum Role {
+		USER = 0;
+		ADMIN = 1;
+	}
+
+message MessageHeader {
+	required uint32 msglen = 1;
+	required MessageType type = 2;
+}
+
+message RegisterRequest {
+	required MessageType type = 1;
+	required bytes name = 2;
+	required bytes password = 3;
+	optional bytes salt = 4;
+}
+
+message RegisterResponse {
+	required MessageType type = 1;
+	required uint32 uid = 2;
+	required Status status = 3;
+}
+
+message LoginRequest {
+	required MessageType type = 1;
+	required uint32 uid = 2;
+	required bytes password = 3;
+}
+
+message UnsignedToken {
+	required uint32 uid = 1;
+	required Role role = 2;
+	required bytes salt=3;
+}
+
+message SignedToken {
+	required UnsignedToken token=1;
+	required bytes signature=2;
+}
+
+message LoginResponse {
+	required MessageType type = 1;
+	required uint32 uid = 2;
+	required Status status = 3;
+	optional SignedToken token = 4;
+}
+	
+message MessageRequest {
+	required MessageType type = 1;
+	required uint32 uid = 2;
+	required Role role = 3;
+	required SignedToken token = 4;
+}
+
+message MessageResponse {
+	required MessageType type = 1;
+	required uint32 uid = 2;
+	required Status status = 3;
+	required bytes msg = 4;
+}
+
+message FlagRequest {
+	required MessageType type = 1;
+	required uint32 uid = 2;
+	required Role role = 3;
+	required SignedToken token = 4;
+}
+
+message FlagResponse {
+	required MessageType type = 1;
+	required uint32 uid = 2;
+	required Status status = 3;
+	required bytes msg = 4;
+}
