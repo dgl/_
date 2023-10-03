@@ -1,6 +1,7 @@
 # Arpeeceetwo BSidesCbr 2023 CTF write-up
 
-Unofficial write-up, will link to official one when it's out.
+Unofficial write-up, the official one is
+[here](https://gitlab.com/cybears/chals-2023/-/tree/main/chals/crypto/crypto-200-arpeeceetwo?ref_type=heads).
 
 ## Background
 
